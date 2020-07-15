@@ -16,8 +16,8 @@ pipeline {
      }
      stage("Running create Set up"){
 		 steps{
-      sh ''' sudo bash /home/pjangra/code/axonchefms/examples/consul_vault/setup -o create; 
-	     sudo bash /home/pjangra/code/axonchefms/examples/consul_vault/setup-o cookbookconfig -p ../../axon_core/.kitchen
+      sh ''' cd /var/tmp/axonchefms/examples/consul_vault/;sudo bash setup -o create; 
+	     cd  /var/tmp/axonchefms/examples/consul_vault/;sudo bash setup -o cookbookconfig -p ../../axon_core/.kitchen.yml
 		 '''
               
     
@@ -25,12 +25,12 @@ pipeline {
 	 }
 	 stage("Destroying existing Kitchen docker"){
 		 steps{
-                sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen destroy all"
+                sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen destroy all"
 	 }
 	 }
 	 stage("Running kitchen Craete"){
 		 steps{
-		 sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen create"
+		 sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen create"
 	 }
 	 }
 	 stage("Runing MS in parralel"){
@@ -42,33 +42,33 @@ pipeline {
 		   
 			stage ("postgresql"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge postgresql-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge postgresql-axcentos-7"
 			}
 			}
              stage ("rabbitmq"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge rabbitmq-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge rabbitmq-axcentos-7"
 			}
 			}
 			 stage ("orientdb"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge orientdb-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge orientdb-axcentos-7"
 			}
 			}
 			 stage ("Odbc"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge odbconsumer-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge odbconsumer-axcentos-7"
 			}
 			}
 			 stage ("changequest"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge changequest-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge changequest-axcentos-7"
 			}
 			}
 
 			 stage ("docupload"){
 				steps{
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge docupload-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge docupload-axcentos-7"
 			}
 			}
 
@@ -79,7 +79,7 @@ pipeline {
 				 
 				steps{
 					retry(2)
-				sh "cd /home/pjangra/code/axonchefms/axon_core;sudo kitchen converge axon-core-axcentos-7"
+				sh "cd /var/tmp/axonchefms/axon_core;sudo kitchen converge axon-core-axcentos-7"
 			}
 			}
 
