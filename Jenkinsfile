@@ -11,7 +11,7 @@ pipeline {
      }
      stage("Destroying docker containers"){
        steps{
-        sh "sudo  docker rm -f \$(docker ps -aq)|| echo 'All Good !!'"
+        sh "sudo  docker rm -f \$(sudo docker ps -aq)|| echo 'All Good !!'"
        }
      }
      stage("Running create Set up"){
