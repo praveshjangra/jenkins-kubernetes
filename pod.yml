@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: anc
+  labels:
+     name: mypod
+spec:
+  containers:
+    - name: nginx2
+      image: nginx
+
